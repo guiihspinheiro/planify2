@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planify</title>
+    <link rel="icon" href="LogoPlanify.png" type="image/x-icon"> <!-- Adicionando o favicon -->
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f3f3;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        header {
+            background-color: #484747;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            position: relative;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            display: none;
+            position: absolute;
+            background-color: #000;
+            top: 90px;
+            left: 20px;
+            width: 200px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+        nav ul.active {
+            display: block;
+        }
+        nav ul li {
+            margin-bottom: 10px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            padding: 10px;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+        nav ul li a:hover {
+            background-color: #555;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-family: "Arial Black", sans-serif;
+            font-size: 24px;
+        }
+        .menu-btn {
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            color: #fff;
+            background-color: #333;
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .menu-btn:hover {
+            background-color: #8CCCA5;
+        }
+        .menu-icon {
+            width: 20px;
+            height: 3px;
+            background-color: #fff;
+            margin: 4px 0;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .header-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .header-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+        .header-links a:hover {
+            background-color: #555;
+        }
+        .logo {
+            display: inline-block;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: fadeInScale 1s forwards;
+        }
+        .logo:hover {
+            transform: scale(1.1);
+        }
+        @keyframes fadeInScale {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        /* Estilo para a caixinha */
+        .click-box {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .click-box:hover {
+            background-color: #555;
+        }
+        .click-box img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="Logodiferente.png" alt="Planify Logo" class="logo" style="height: 50px;"> <!-- Substitua pelo caminho do seu logo -->
+        <div class="menu-btn" onclick="toggleMenu()">
+            <div class="menu-icon"></div> <!-- Ícone de menu -->
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="meus_eventos.html">Eventos</a></li>
+                <li><a href="usuarios.html">Usuários</a></li>
+             
+                <li><a href="perfil.html">Perfil</a></li>
+            </ul>
+        </nav>
+        <div class="header-links">
+            <a href="home.html">Início</a>
+            <a href="contato.html">Contato</a>
+            <a href="sobre.html">Sobre Nós</a>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Bem-vindo ao Planify!</h2>
+        <p>
+            Aqui você pode encontrar informações sobre os eventos futuros que estamos organizando,
+            bem como detalhes sobre os eventos que já realizamos.
+        </p>
+        <p>
+            Se você está procurando por serviços de gerenciamento de eventos para o seu próximo
+            encontro corporativo, conferência, festa ou qualquer outro tipo de evento, você está no lugar certo!
+        </p>
+        <p>
+            Explore nosso site para saber mais sobre nossos serviços e como podemos ajudar a tornar seu evento um sucesso.
+        </p>
+        <!-- Adicionando a caixinha clicável com imagem -->
+        <div class="click-box" onclick="window.location.href='meus_eventos.html'">
+            <img src="calendario.png" alt="calendario"> <!-- Substitua pelo caminho da sua imagem -->
+            Ver Meus Eventos
+        </div>
+    </div>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.menu').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

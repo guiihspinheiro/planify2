@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planify</title>
+    <!-- Adicionando ícone da página -->
+    <link rel="icon" type="image/png" href="LogoPlanify.png">
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #484747;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            position: relative;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            display: none;
+            position: absolute;
+            background-color: #000;
+            top: 90px;
+            left: 20px;
+            width: 200px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+        nav ul.active {
+            display: block;
+        }
+        nav ul li {
+            margin-bottom: 10px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            padding: 10px;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+        nav ul li a:hover {
+            background-color: #555;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-family: "Arial Black", sans-serif;
+            font-size: 24px;
+        }
+        .menu-btn {
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            color: #fff;
+            background-color: #333;
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .menu-btn:hover {
+            background-color: #8CCCA5;
+        }
+        .menu-icon {
+            width: 20px;
+            height: 3px;
+            background-color: #fff;
+            margin: 4px 0;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .header-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .header-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+        .header-links a:hover {
+            background-color: #555;
+        }
+
+        /* Estilos para a caixa de pesquisa */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .search-box {
+        width: 300px;
+        padding: 10px 30px 10px 10px;
+        border: 2px solid #333;
+        border-radius: 5px;
+        margin-right: 10px;
+        background: url('pesquisa.png') no-repeat;
+        background-size: 20px;
+        background-position: right 10px center;
+        }
+
+        .search-button {
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #555;
+        }
+
+        /* Estilos para os cartões */
+        .users {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .users-name {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body onload="fetchUsers()">
+    <header>
+        <img src="Logodiferente.png" alt="Logo Planify" class="header-logo" style="width: 100px; height: auto;">
+        <div class="menu-btn" onclick="toggleMenu()">
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="meus_eventos.html">Eventos</a></li>
+                <li><a href="usuarios.html">Usuários</a></li>
+                <li><a href="perfil.html">Perfil</a></li> 
+            </ul>
+        </nav>
+        <div class="header-links">
+            <a href="index.html">Início</a>
+            <a href="contato.html">Contato</a>
+            <a href="sobre.html">Sobre Nós</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Caixa de pesquisa -->
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-box" placeholder="Pesquisar usuários...">
+            <button onclick="searchUsers()" class="search-button">Pesquisar</button>
+        </div>
+
+        <div class="board">
+            <div class="column">
+                <div id="1" class="users-list">
+                    <!-- Lista de usuários aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.menu').classList.toggle('active');
+        }
+
+        function searchUsers() {
+            var input = document.getElementById('searchInput').value.toLowerCase();
+            var allUsers = document.querySelectorAll('.users-list');
+
+            allUsers.forEach(function(usersList) {
+                var users = usersList.querySelectorAll('.users');
+
+                users.forEach(function(user) {
+                    var userName = user.querySelector('.users-name').textContent.toLowerCase();
+                    if (userName.indexOf(input) > -1) {
+                        user.style.display = '';
+                    } else {
+                        user.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        async function fetchUsers() {
+            try {
+                const response = await fetch('http://localhost:8080/users/list-users');
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar usuários: ' + response.statusText);
+                }
+                const users = await response.json();
+                const usersList = document.getElementById('1'); // Alterado para o ID correto
+                usersList.innerHTML = '';
+                users.forEach(user => {
+                    let div = document.createElement('div');
+                    div.className = 'users';
+                    div.innerHTML = `<span class="users-name"> ${user.name} - ${user.email}`;
+                    usersList.appendChild(div);
+                });
+            } catch (error) {
+                console.error('Erro ao buscar usuários:', error);
+                alert('Erro ao buscar usuários. Tente novamente mais tarde.');
+            }
+        }
+    </script>
+</body>
+</html>

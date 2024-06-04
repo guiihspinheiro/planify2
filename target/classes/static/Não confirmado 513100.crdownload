@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planify</title>
+    <link rel="icon" type="image/png" href="LogoPlanify.png">
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #484747;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            display: none;
+            position: absolute;
+            background-color: #000;
+            top: 90px;
+            left: 20px;
+            width: 200px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+        nav ul.active {
+            display: block;
+        }
+        nav ul li {
+            margin-bottom: 10px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            padding: 10px;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+        nav ul li a:hover {
+            background-color: #555;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-family: "Arial Black", sans-serif;
+            font-size: 24px;
+        }
+        .menu-btn {
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            color: #fff;
+            background-color: #333;
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .menu-btn:hover {
+            background-color: #8CCCA5;
+        }
+        .menu-icon {
+            width: 20px;
+            height: 3px;
+            background-color: #fff;
+            margin: 4px 0;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .header-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .header-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+        .header-links a:hover {
+            background-color: #555;
+        }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .search-box {
+            width: 300px;
+            padding: 10px 30px 10px 10px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            margin-right: 10px;
+            background: url('pesquisa.png') no-repeat;
+            background-size: 20px;
+            background-position: right 10px center;
+        }
+        .search-button {
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-button:hover {
+            background-color: #555;
+        }
+        .event {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .event-name {
+            font-weight: bold;
+            color: #333;
+        }
+        .create-event-btn {
+            position: absolute;
+            top: 157px;
+            right: 20px;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .create-event-btn:hover {
+            background-color: #8CCCA5;
+        }
+        .event-action-btn {
+            border: none;
+            background: none;
+            cursor: pointer;
+            padding: 5px;
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        .event-action-btn:hover {
+            transform: scale(1.2);
+        }
+        .event-action-btn img {
+            width: 20px;
+            height: 20px;
+        }
+        .categorias {
+            display: none;
+        }
+        #nenhum {
+            display: none;
+        }
+    </style>
+    <script>
+      async function fetchEventos() {
+    try {
+        const response = await fetch('http://localhost:8080/evento/list-evento');
+        if (!response.ok) {
+            throw new Error('Erro ao buscar eventos: ' + response.statusText);
+        }
+        const eventos = await response.json();
+        console.log('Eventos:', eventos);
+
+        const andamentoList = document.getElementById('andamento');
+        const concluidosList = document.getElementById('concluidos');
+        const canceladosList = document.getElementById('cancelados');
+        const embreveList = document.getElementById('embreve');
+        const nenhum = document.getElementById('nenhum');
+        const categorias = document.getElementsByClassName('categorias');
+
+        andamentoList.innerHTML = '';
+        concluidosList.innerHTML = '';
+        canceladosList.innerHTML = '';
+        embreveList.innerHTML = '';
+
+        if (eventos.length === 0) {
+            nenhum.style.display = 'block';
+            Array.from(categorias).forEach(cat => cat.style.display = 'none');
+        } else {
+            nenhum.style.display = 'none';
+            Array.from(categorias).forEach(cat => cat.style.display = 'block');
+            eventos.forEach(evento => {
+                let item = document.createElement('div');
+                item.className = 'event';
+                item.id = `evento-${evento.id}`;
+                item.setAttribute('data-status', evento.statusEvento);
+                item.innerHTML = `
+                    <span class="event-name">${evento.nomedoevento}</span>
+                    <span>${evento.local}</span>
+                    <span>${new Date(evento.data).toLocaleDateString()}</span>
+                    <span>${evento.hora}</span>
+                    <div>
+                        <button class="event-action-btn" onclick="markAsCompleted('${evento.id}')">
+                            <img src="v.png" alt="Concluir">
+                        </button>
+                        <button class="event-action-btn" onclick="cancelEvent('${evento.id}')">
+                            <img src="x.png" alt="Cancelar">
+                        </button>
+                        <button class="event-action-btn" onclick="cancelEvent('${evento.id}')">
+                            <img src="R.png" alt="Voltar">
+                        </button>
+                    </div>
+                `;
+
+                switch (evento.statusEvento.replace(/"/g, '')) {
+                    case 'Em Breve':
+                        embreveList.appendChild(item);
+                        break;
+                    case 'Em Andamento':
+                        andamentoList.appendChild(item);
+                        break;
+                    case 'Concluido':
+                        concluidosList.appendChild(item);
+                        break;
+                    case 'Cancelado':
+                        canceladosList.appendChild(item);
+                        break;
+                    default:
+                        console.error(`Status desconhecido para o evento ${evento.id}: ${evento.statusEvento}`);
+                }
+            });
+        }
+    } catch (error) {
+        console.error('Erro ao buscar eventos:', error);
+    }
+}
+
+window.onload = function() {
+    fetchEventos();
+    document.getElementById('searchInput').addEventListener('input', autoSearch);
+}
+
+
+        function toggleMenu() {
+            document.querySelector('nav ul').classList.toggle('active');
+        }
+
+        function searchEvents() {
+            var input = document.getElementById('searchInput').value.toLowerCase();
+            var allEvents = document.querySelectorAll('.event');
+
+            allEvents.forEach(function(event) {
+                var eventName = event.querySelector('.event-name').textContent.toLowerCase();
+                if (eventName.includes(input)) {
+                    event.style.display = '';
+                } else {
+                    event.style.display = 'none';
+                }
+            });
+        }
+
+        async function markAsCompleted(eventId) {
+            var event = document.getElementById(`evento-${eventId}`);
+            event.setAttribute('data-status', 'Concluido');
+            document.getElementById('concluidos').appendChild(event);
+            removeEventButtons(event);
+            await updateEventStatus(eventId, 'Concluido');
+        }
+
+        async function cancelEvent(eventId) {
+            var event = document.getElementById(`evento-${eventId}`);
+            event.setAttribute('data-status', 'Cancelado');
+            document.getElementById('cancelados').appendChild(event);
+            removeEventButtons(event);
+            await updateEventStatus(eventId, 'Cancelado');
+        }
+
+        function removeEventButtons(event) {
+            var buttons = event.querySelectorAll('.event-action-btn');
+            buttons.forEach(function(button) {
+                button.remove();
+            });
+        }
+
+        async function updateEventStatus(eventId, status) {
+            try {
+                const response = await fetch(`http://localhost:8080/evento/update-status/${eventId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(status)
+                });
+                if (!response.ok) {
+                    throw new Error('Erro ao atualizar o status do evento: ' + response.statusText);
+                }
+                console.log(`Status do evento ${eventId} atualizado para ${status}`);
+            } catch (error) {
+                console.error('Erro ao atualizar o status do evento:', error);
+                alert('Erro ao atualizar o status do evento. Tente novamente mais tarde.');
+            }
+        }
+
+        window.onload = function() {
+            fetchEventos();
+            document.getElementById('searchInput').addEventListener('input', autoSearch);
+        }
+
+        function autoSearch() {
+            var input = document.getElementById('searchInput').value.toLowerCase();
+            var allLists = document.querySelectorAll('.event-list');
+
+            allLists.forEach(function(eventList) {
+                var events = eventList.querySelectorAll('.event');
+
+                events.forEach(function(event) {
+                    var eventName = event.querySelector('.event-name').textContent.toLowerCase();
+                    if (eventName.includes(input)) {
+                        event.style.display = '';
+                    } else {
+                        event.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        setInterval(fetchEventos, 30000);
+    </script>
+</head>
+<body>
+    <header>
+        <img src="Logodiferente.png" alt="Logo Planify" class="header-logo" style="width: 100px; height: auto;">
+        <div class="menu-btn" onclick="toggleMenu()">
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="meus_eventos.html">Eventos</a></li>
+                <li><a href="usuarios.html">Usuários</a></li>
+                <li><a href="perfil.html">Perfil</a></li>
+            </ul>
+        </nav>
+        <div class="header-links">
+            <a href="home.html">Início</a>
+            <a href="contato.html">Contato</a>
+            <a href="sobre.html">Sobre Nós</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <button class="create-event-btn" onclick="window.location.href='criar_evento.html'">Criar evento</button>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-box" placeholder="Pesquisar eventos...">
+            <button onclick="searchEvents()" class="search-button">Pesquisar</button>
+        </div>
+        <div class="board">
+            <div class="column">
+                <h2 class="categorias">Em Breve</h2>
+                <div id="embreve" class="event-list"></div>
+            </div>
+            <div class="column">
+                <h2 class="categorias">Eventos em andamento</h2>
+                <div id="andamento" class="event-list"></div>
+            </div>
+            <div class="column">
+                <h2 class="categorias">Eventos concluídos</h2>
+                <div id="concluidos" class="event-list"></div>
+            </div>
+            <div class="column">
+                <h2 class="categorias">Eventos cancelados</h2>
+                <div id="cancelados" class="event-list"></div>
+            </div>
+            <h2 id="nenhum">Nenhum evento cadastrado</h2>
+        </div>
+    </div>
+</body>
+</html>

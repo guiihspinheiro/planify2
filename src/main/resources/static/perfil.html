@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planify</title>
+    <link rel="icon" href="LogoPlanify.png" type="image/x-icon">
+</head>
+<body>
+    <button class="create-event-btn" onclick="window.location.href='index.html'">Desconectar</button>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #484747;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+            .create-event-btn {
+            position: absolute;
+            top: 157px;
+            right: 20px;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .create-event-btn:hover {
+            background-color: #8CCCA5;
+        
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            display: none;
+            position: absolute;
+            background-color: #000;
+            top: 90px;
+            left: 20px;
+            width: 200px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+        nav ul.active {
+            display: block;
+        }
+        nav ul li {
+            margin-bottom: 10px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            padding: 10px;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+        nav ul li a:hover {
+            background-color: #555;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-family: "Arial Black", sans-serif;
+            font-size: 24px;
+        }
+        .menu-btn {
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            color: #fff;
+            background-color: #333;
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .menu-btn:hover {
+            background-color: #8CCCA5;
+        }
+        .menu-icon {
+            width: 20px;
+            height: 3px;
+            background-color: #fff;
+            margin: 4px 0;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .header-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .header-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+        .header-links a:hover {
+            background-color: #555;
+        }
+        .profile-section {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .profile-section h2 {
+            margin-top: 0;
+        }
+        .profile-section p {
+            margin-bottom: 0;
+        }
+    </style>
+
+
+    <header>
+        <img src="Logodiferente.png" alt="Planify Logo" class="logo" style="height: 50px;">
+        <div class="menu-btn" onclick="toggleMenu()">
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="meus_eventos.html">Eventos</a></li>
+                <li><a href="usuarios.html">Usuários</a></li>
+                <li><a href="perfil.html">Perfil</a></li>
+            </ul>
+        </nav>
+        <div class="header-links">
+            <a href="home.html">Início</a>
+            <a href="contato.html">Contato</a>
+            <a href="sobre.html">Sobre Nós</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="profile-section">
+            <h2>Informações do Usuário</h2>
+            <p>Nome: <span id="name"></span></p>
+            <p>Email: <span id="email"></span></p>
+            <p>Cidade: <span id="cidade"></span></p>
+            <p>CPF: <span id="cpf"></span></p>
+            <!-- Outros campos conforme necessário -->
+        </div>
+
+        <div class="profile-section">
+            <h2>Editar Perfil</h2>
+            <form id="edit-profile-form">
+                <label for="name-input">Nome:</label>
+                <input type="text" id="name-input" name="name" required>
+                <label for="cidade-input">Cidade:</label>
+                <input type="text" id="cidade-input" name="cidade" required>
+
+                <!-- Outros campos conforme necessário -->
+                <button type="submit">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        const email = getCookie('email');
+
+        async function fetchProfile() {
+            try {
+                const response = await fetch(`http://localhost:8080/users/profile/${email}`);
+                const user = await response.json();
+                document.getElementById('name').textContent = user.name;
+                document.getElementById('email').textContent = user.email;
+                document.getElementById('cidade').textContent = user.cidade;
+                document.getElementById('cpf').textContent = user.cpf;
+
+                // Preencher os campos do formulário
+                document.getElementById('name-input').value = user.name;
+                document.getElementById('cidade-input').value = user.cidade;
+
+            } catch (error) {
+                console.error('Erro ao buscar perfil:', error);
+            }
+        }
+
+        document.getElementById('edit-profile-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name-input').value;
+            const cidade = document.getElementById('cidade-input').value;
+
+
+            const updatedUser = {
+                name: name,
+                cidade: cidade,
+
+            };
+
+            try {
+                const response = await fetch(`http://localhost:8080/users/profile/${email}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updatedUser),
+                });
+                if (response.ok) {
+                    fetchProfile(); // Recarrega o perfil atualizado
+                    alert('Perfil atualizado com sucesso!');
+                    location.reload(); // Recarrega a página
+                } else {
+                    console.error('Erro ao atualizar perfil:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Erro ao atualizar perfil:', error);
+            }
+        });
+
+        fetchProfile();
+
+        function toggleMenu() {
+            document.querySelector('.menu').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

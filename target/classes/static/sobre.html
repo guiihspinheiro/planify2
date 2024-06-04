@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planify</title>
+    <!-- Adicionando ícone da página -->
+    <link rel="icon" type="image/png" href="LogoPlanify.png">
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Alteração da fonte */
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #484747;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            position: relative;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            display: none;
+            position: absolute;
+            background-color: #000; /* Cor do menu preto */
+            top: 90px; /* Ajuste na posição do menu */
+            left: 20px;
+            width: 200px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+        nav ul.active {
+            display: block;
+        }
+        nav ul li {
+            margin-bottom: 10px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            padding: 10px;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+        nav ul li a:hover {
+            background-color: #555;
+        }
+        h1 {
+            display: none; /* Esconde o <h1> */
+        }
+        .menu-btn {
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            color: #fff;
+            background-color: #333; /* Cor do botão de menu preto */
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .menu-btn:hover {
+            background-color: #8CCCA5;
+        }
+        .menu-icon {
+            width: 20px;
+            height: 3px;
+            background-color: #fff;
+            margin: 4px 0;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .header-links {
+            display: flex;
+            justify-content: center; /* Ajuste para centralizar as opções */
+            margin-bottom: 20px;
+        }
+        .header-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+        .header-links a:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Substituindo <h1> por imagem -->
+        <img src="Logodiferente.png" alt="Logo Planify" class="header-logo" style="width: 100px; height: auto;">
+        <div class="menu-btn" onclick="toggleMenu()">
+            <div class="menu-icon"></div> <!-- Ícone de menu -->
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="meus_eventos.html">Eventos</a></li>
+                <li><a href="usuarios.html">Usuários</a></li>
+                <li><a href="perfil.html">Perfil</a></li> 
+        </nav>
+        <div class="header-links">
+            <a href="home.html">Início</a>
+            <a href="contato.html">Contato</a>
+            <a href="sobre.html">Sobre Nós</a>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Sobre nós</h2>
+        <p>
+            Planify é a solução definitiva para quem procura realizar eventos memoráveis com facilidade. Com uma interface intuitiva e recursos poderosos, o Planify permite que os usuários naveguem por uma vasta gama de opções de locais, fornecedores e serviços relacionados a eventos. Seja procurando o local perfeito, contratando serviços de catering ou gerenciando listas de convidados, o Planify simplifica cada etapa do processo de planejamento.
+        </p>
+        <p>
+            Se você está procurando por serviços de gerenciamento de eventos para o seu próximo
+            encontro corporativo, conferência, festa ou qualquer outro tipo de evento, você está no lugar certo!
+        </p>
+        <p>
+            Com a confiabilidade e o suporte de uma equipe experiente, o Planify se destaca como a escolha preferida para quem busca realizar eventos de sucesso sem estresse. Junte-se à comunidade do Planify e transforme sua visão de evento em realidade,
+            com elegância e facilidade. O Planify é uma marca do Grupo TDB.
+<br>
+<br>
+Criado por: Clara Luiza, Guilherme, Luis Gustavo e Yan ;)
+        </p>
+    </div>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.menu').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

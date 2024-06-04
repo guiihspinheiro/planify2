@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planify - Contato</title>
+    <link rel="icon" href="LogoPlanify.png" type="image/png">
+    <style>
+        /* Estilos originais da página "contato.html" */
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Alteração da fonte */
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #484747;
+            color: #fff;
+            padding: 10px 20px; /* Redução do padding */
+            text-align: center;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            display: none;
+            position: absolute;
+            background-color: #000; /* Cor do menu preto */
+            top: 90px; /* Ajuste na posição do menu */
+            left: 20px;
+            width: 200px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+        nav ul.active {
+            display: block;
+        }
+        nav ul li {
+            margin-bottom: 10px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            padding: 10px;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+        nav ul li a:hover {
+            background-color: #555;
+        }
+        .header-logo {
+            width: 100px; /* Ajuste o tamanho conforme necessário */
+            height: auto;
+            margin: 0 auto 10px; /* Espaçamento inferior */
+        }
+        h1 {
+            text-align: center;
+            margin-top: 10px; /* Redução da margem superior */
+            margin-bottom: 10px; /* Redução da margem inferior */
+            font-family: "Arial Black", sans-serif; /* Alteração da fonte */
+            font-size: 24px; /* Redução do tamanho da fonte */
+        }
+        .menu-btn {
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            color: #fff;
+            background-color: #333; /* Cor do botão de menu preto */
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .menu-btn:hover {
+            background-color: #8CCCA5;
+        }
+        .menu-icon {
+            width: 20px;
+            height: 3px;
+            background-color: #fff;
+            margin: 4px 0;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .header-links {
+            display: flex;
+            justify-content: center; /* Ajuste para centralizar as opções */
+            margin-bottom: 20px;
+        }
+        .header-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+        .header-links a:hover {
+            background-color: #555;
+        }
+        
+        /* Estilos do formulário */
+        html {
+            background-color: #181818;
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+        }
+
+        form {
+            width: 90%;
+            min-width: 28.125em;
+            max-width: 35em;
+            background-color: #405540;
+            padding: 1em;
+        }
+
+        fieldset {
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        label,
+        input,
+        textarea {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input,
+        textarea {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 2px solid transparent;
+            border-bottom-color: #bbb;
+            padding: 0.75em;
+            margin: 0.5em 0 2.5em;
+            color: white;
+            outline: 0;
+        }
+
+        input:invalid:focus,
+        textarea:invalid:focus {
+            border-bottom: 2px solid #ff000d;
+        }
+
+        input:valid:focus,
+        textarea:valid:focus {
+            border-bottom: 2px solid #0ec72a;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-bottom: 2px solid #8e999a;
+            background-color: #2a2727;
+        }
+
+        legend {
+            padding: 0.5em;
+            text-align: center;
+            font-weight: bold;
+            color: #8e999a;
+            font-size: 1.3em;
+        }
+
+        .btn {
+            background-color: #2a2727;
+            color: white;
+            cursor: pointer;
+            padding: 0.7em;
+            font-size: 1.2em;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="Logodiferente.png" alt="Logo Planify" class="header-logo">
+        <div class="menu-btn" onclick="toggleMenu()">
+            <div class="menu-icon"></div> <!-- Ícone de menu -->
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="meus_eventos.html">Eventos</a></li>
+                <li><a href="usuarios.html">Usuários</a></li>
+                <li><a href="perfil.html">Perfil</a></li> 
+        </nav>
+        <div class="header-links">
+            <a href="home.html">Início</a>
+            <a href="contato.html">Contato</a>
+            <a href="sobre.html">Sobre Nós</a>
+        </div>
+    </header>
+    
+    <!-- Formulário -->
+    <form action="#" method="post" autocomplete="off" class="container">
+        <fieldset>
+            <legend>Formulário de contato</legend>
+            <label for="name">Nome</label>
+            <input type="text" name="name" id="name" required placeholder="Digite seu nome completo" />
+            <label for="email">E-mail</label>
+            <input type="email" name="email" id="email" required placeholder="Digite um e-mail válido" />
+            <label for="subject">Assunto</label>
+            <input type="text" name="subject" id="subject" required placeholder="Digite o assunto"/>
+            <label for="message">Mensagem</label>
+            <textarea name="message" id="message" rows="7" required maxlength="1000" minlength="20"
+                placeholder="Conte-nos tudo"></textarea>
+            <button type="submit" class="btn">Enviar</button>
+        </fieldset>
+    </form>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.menu').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
